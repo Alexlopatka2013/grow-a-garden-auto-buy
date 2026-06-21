@@ -2,17 +2,19 @@ import time
 import pydirectinput as pdi
 import pyautogui
 
-# ===== USTAWIENIA =====
+# =========================
+# USTAWIENIA POD 2K 2560x1440
+# =========================
 
-# Kliknięcie w GUI sklepu, żeby scroll działał
-GUI_X = 600
-GUI_Y = 300
+# Środek ekranu / GUI sklepu dla 2K
+GUI_X = 1280
+GUI_Y = 720
 
-# Pozycja bambusa
+# Twoje współrzędne bambusa
 BAMBUS_X = 1242
 BAMBUS_Y = 756
 
-# Pozycja przycisku kupna 700 szekli
+# Twoje współrzędne przycisku kupna 700 szekli
 KUP_X = 1259
 KUP_Y = 599
 
@@ -26,17 +28,14 @@ KUP_ILE_RAZY = 27
 POWTARZAJ_CO_SEKUND = 10
 
 # Ile trzymać E
-HOLD_E_SECONDS = 0.7
+HOLD_E_SECONDS = 1.2
 
+# Pauzy, żeby Roblox nadążał
 pdi.PAUSE = 0.08
 pyautogui.PAUSE = 0.08
 
-
-def klik(x, y, delay=0.3):
-    pdi.moveTo(x, y)
-    time.sleep(0.1)
-    pdi.click()
-    time.sleep(delay)
+# Fail-safe: jak mysz pójdzie w róg ekranu, PyAutoGUI może zatrzymać skrypt
+pyautogui.FAILSAFE = True
 
 
 def nacisnij_e():
@@ -47,38 +46,53 @@ def nacisnij_e():
     time.sleep(1)
 
 
+def klik(x, y, delay=0.3):
+    pdi.moveTo(x, y)
+    time.sleep(0.1)
+    pdi.click()
+    time.sleep(delay)
+
+
 print("Bot startuje za 10 sekund.")
-print("Wejdź do Roblox, stań przy sklepie z nasionami i kliknij raz w okno gry.")
+print("WEJDŹ DO ROBLOX.")
+print("STAŃ PRZY SKLEPIE Z NASIONAMI.")
+print("KLIKNIJ RAZ W OKNO GRY, ŻEBY ROBLOX BYŁ AKTYWNY.")
+print("Nie klikaj PowerShella po starcie.")
 time.sleep(10)
 
+
 while True:
-    print("=== START CYKLU ===")
+    print("================================")
+    print("START CYKLU")
+    print("================================")
 
-    # Aktywuj okno Roblox / GUI
-    print("Klikam w okno gry...")
-    klik(GUI_X, GUI_Y, 0.5)
+    # Ważne: nie klikamy na początku w Windows,
+    # bo Roblox ma być już aktywny po Twoim kliknięciu.
 
-    # Otwórz sklep E
-    print("Otwieram sklep z nasionami...")
+    print("Otwieram sklep z nasionami przez E...")
     nacisnij_e()
 
-    # Czekaj na GUI sklepu
-    print("Czekam na GUI sklepu...")
+    print("Czekam aż GUI sklepu się otworzy...")
     time.sleep(2)
 
-    # Kliknij GUI, żeby scroll działał
-    print("Aktywuję GUI sklepu...")
-    klik(GUI_X, GUI_Y, 0.5)
+    print("Ustawiam mysz nad środkiem sklepu do scrolla...")
+    pdi.moveTo(GUI_X, GUI_Y)
+    time.sleep(0.5)
 
-    # Scroll
     print("Scrolluję w dół...")
     for i in range(SCROLL_ILE):
         pyautogui.scroll(-120)
         time.sleep(0.05)
 
-    # Klik bambus
     print("Klikam bambus...")
     klik(BAMBUS_X, BAMBUS_Y, 1)
 
-    # Klik kup 27 razy
-    print("Kupuję 27 razy...")
+    print("Klikam kup 27 razy...")
+    for i in range(KUP_ILE_RAZY):
+        print(f"Kupowanie {i + 1}/{KUP_ILE_RAZY}")
+        klik(KUP_X, KUP_Y, 0.25)
+
+    print("KONIEC CYKLU")
+    print(f"Czekam {POWTARZAJ_CO_SEKUND} sekund...")
+    time.sleep(POWTARZAJ_CO_SEKUND)
+``
