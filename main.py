@@ -2,9 +2,9 @@ import time
 import pydirectinput as pdi
 import pyautogui
 
-# ===== TWOJE USTAWIENIA =====
+# ===== USTAWIENIA =====
 
-# Kliknięcie w środek GUI/sklepu, żeby scroll działał
+# Kliknięcie w GUI sklepu, żeby scroll działał
 GUI_X = 600
 GUI_Y = 300
 
@@ -22,11 +22,12 @@ SCROLL_ILE = 23
 # Ile razy kliknąć kupno
 KUP_ILE_RAZY = 27
 
-# Ile trzymać E
-# Jak zwykłe kliknięcie E nie działa, zwiększ na 1.0 albo 1.5
-HOLD_E_SECONDS = 0.5
+# Co ile sekund powtarzać całą akcję
+POWTARZAJ_CO_SEKUND = 10
 
-# Pauzy
+# Ile trzymać E
+HOLD_E_SECONDS = 0.7
+
 pdi.PAUSE = 0.08
 pyautogui.PAUSE = 0.08
 
@@ -47,39 +48,37 @@ def nacisnij_e():
 
 
 print("Bot startuje za 10 sekund.")
-print("TERAZ wejdz do Roblox, stan przy sklepie z nasionami i kliknij raz w okno gry.")
+print("Wejdź do Roblox, stań przy sklepie z nasionami i kliknij raz w okno gry.")
 time.sleep(10)
 
-# Klik w Roblox, żeby gra dostała focus
-print("Aktywuję Roblox kliknięciem w środek ekranu...")
-klik(GUI_X, GUI_Y, 0.5)
+while True:
+    print("=== START CYKLU ===")
 
-# Otwórz sklep
-print("Otwieram sklep z nasionami przez E...")
-nacisnij_e()
+    # Aktywuj okno Roblox / GUI
+    print("Klikam w okno gry...")
+    klik(GUI_X, GUI_Y, 0.5)
 
-# Poczekaj aż GUI sklepu się pokaże
-print("Czekam na GUI sklepu...")
-time.sleep(2)
+    # Otwórz sklep E
+    print("Otwieram sklep z nasionami...")
+    nacisnij_e()
 
-# Klik w GUI sklepu
-print("Klikam GUI sklepu...")
-klik(GUI_X, GUI_Y, 0.5)
+    # Czekaj na GUI sklepu
+    print("Czekam na GUI sklepu...")
+    time.sleep(2)
 
-# Scroll
-print("Scrolluję w dół...")
-for i in range(SCROLL_ILE):
-    pyautogui.scroll(-120)
-    time.sleep(0.05)
+    # Kliknij GUI, żeby scroll działał
+    print("Aktywuję GUI sklepu...")
+    klik(GUI_X, GUI_Y, 0.5)
 
-# Klik bambus
-print("Klikam bambus...")
-klik(BAMBUS_X, BAMBUS_Y, 1)
+    # Scroll
+    print("Scrolluję w dół...")
+    for i in range(SCROLL_ILE):
+        pyautogui.scroll(-120)
+        time.sleep(0.05)
 
-# Kup 27 razy
-print("Kupuję 27 razy...")
-for i in range(KUP_ILE_RAZY):
-    print(f"Kupowanie {i + 1}/{KUP_ILE_RAZY}")
-    klik(KUP_X, KUP_Y, 0.25)
+    # Klik bambus
+    print("Klikam bambus...")
+    klik(BAMBUS_X, BAMBUS_Y, 1)
 
-print("Gotowe ✅")
+    # Klik kup 27 razy
+    print("Kupuję 27 razy...")
