@@ -1,4 +1,12 @@
 {
-  "interval": 5,
-  "item": "bamboo"
+  "open_shop_key": "e",
+  "delay_after_open": 2,
+  "bamboo_button": {
+    "x": 800,
+    "y": 400
+  },
+  "buy_button": {
+    "x": 900,
+    "y": 650
+  }
 }
