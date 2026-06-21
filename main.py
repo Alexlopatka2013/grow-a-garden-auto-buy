@@ -1,31 +1,34 @@
 import pyautogui
 import time
-import json
-
-# Wczytanie ustawień z config.json
-with open("config.json", "r", encoding="utf-8") as file:
-    config = json.load(file)
-
-open_shop_key = config["open_shop_key"]
-delay_after_open = config["delay_after_open"]
-bamboo_button = config["bamboo_button"]
-buy_button = config["buy_button"]
 
 print("Bot startuje za 5 sekund...")
-print("Ustaw postać przy sklepie z nasionami.")
 time.sleep(5)
 
-print("Naciskam E, żeby otworzyć sklep...")
-pyautogui.press(open_shop_key)
+while True:
+    print("Otwieram sklep...")
+    pyautogui.press("e")
+    time.sleep(2)
 
-time.sleep(delay_after_open)
+    # aktywuj GUI
+    pyautogui.click(600, 300)
+    time.sleep(0.5)
 
-print("Klikam bambus...")
-pyautogui.click(bamboo_button["x"], bamboo_button["y"])
+    # scroll 23 razy
+    print("Scrolluję...")
+    for i in range(23):
+        pyautogui.scroll(-120)
+        time.sleep(0.05)
 
-time.sleep(1)
+    # klik bambus
+    print("Klikam bambus...")
+    pyautogui.click(1242, 756)
+    time.sleep(1)
 
-print("Klikam kup za 700 szekli...")
-pyautogui.click(buy_button["x"], buy_button["y"])
+    # klik kup 27 razy
+    print("Kupuję 27 razy...")
+    for i in range(27):
+        pyautogui.click(1259, 599)
+        time.sleep(0.3)
 
-print("Gotowe! Próba kupienia bambusa zakończona.")
+    print("Czekam 5 sekund...")
+    time.sleep(5)
