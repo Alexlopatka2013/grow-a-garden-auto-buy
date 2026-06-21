@@ -2,69 +2,84 @@ import time
 import pydirectinput as pdi
 import pyautogui
 
-# Małe pauzy, żeby Roblox nadążał
-pdi.PAUSE = 0.05
-pyautogui.PAUSE = 0.05
+# ===== TWOJE USTAWIENIA =====
 
-# Współrzędne z Twojego setupu
-BAMBUS_X = 1242
-BAMBUS_Y = 756
-
-KUP_X = 1259
-KUP_Y = 599
-
+# Kliknięcie w środek GUI/sklepu, żeby scroll działał
 GUI_X = 600
 GUI_Y = 300
 
+# Pozycja bambusa
+BAMBUS_X = 1242
+BAMBUS_Y = 756
+
+# Pozycja przycisku kupna 700 szekli
+KUP_X = 1259
+KUP_Y = 599
+
+# Ile razy scrollować w dół
 SCROLL_ILE = 23
+
+# Ile razy kliknąć kupno
 KUP_ILE_RAZY = 27
 
+# Ile trzymać E
+# Jak zwykłe kliknięcie E nie działa, zwiększ na 1.0 albo 1.5
+HOLD_E_SECONDS = 0.5
 
-def nacisnij_klawisz(klawisz, czas=0.2):
-    pdi.keyDown(klawisz)
-    time.sleep(czas)
-    pdi.keyUp(klawisz)
-    time.sleep(0.2)
+# Pauzy
+pdi.PAUSE = 0.08
+pyautogui.PAUSE = 0.08
 
 
-def kliknij(x, y, przerwa=0.3):
+def klik(x, y, delay=0.3):
     pdi.moveTo(x, y)
     time.sleep(0.1)
     pdi.click()
-    time.sleep(przerwa)
+    time.sleep(delay)
 
 
-print("Bot startuje za 7 sekund...")
-print("Wejdź teraz do Roblox i kliknij raz w okno gry.")
-time.sleep(7)
-
-while True:
-    print("Otwieram sklep E...")
-    nacisnij_klawisz("e", 0.25)
-    time.sleep(2)
-
-    print("Aktywuję GUI sklepu...")
-    kliknij(GUI_X, GUI_Y, 0.5)
-
-    print("Scrolluję sklep 23 razy...")
-    for i in range(SCROLL_ILE):
-        pyautogui.scroll(-120)
-        time.sleep(0.05)
-
-    print("Klikam bambus...")
-    kliknij(BAMBUS_X, BAMBUS_Y, 1)
-
-    print("Kupuję 27 razy przycisk 700 szekli...")
-    for i in range(KUP_ILE_RAZY):
-        print(f"Kupowanie {i + 1}/{KUP_ILE_RAZY}")
-        kliknij(KUP_X, KUP_Y, 0.25)
-
-    print("Próbuję zamknąć sklep E...")
-    nacisnij_klawisz("e", 0.25)
+def nacisnij_e():
+    print("Naciskam E...")
+    pdi.keyDown("e")
+    time.sleep(HOLD_E_SECONDS)
+    pdi.keyUp("e")
     time.sleep(1)
 
-    print("Anty AFK - skok...")
-    nacisnij_klawisz("space", 0.25)
 
-    print("Czekam 5 sekund i powtarzam...")
-    time.sleep(5)
+print("Bot startuje za 10 sekund.")
+print("TERAZ wejdz do Roblox, stan przy sklepie z nasionami i kliknij raz w okno gry.")
+time.sleep(10)
+
+# Klik w Roblox, żeby gra dostała focus
+print("Aktywuję Roblox kliknięciem w środek ekranu...")
+klik(GUI_X, GUI_Y, 0.5)
+
+# Otwórz sklep
+print("Otwieram sklep z nasionami przez E...")
+nacisnij_e()
+
+# Poczekaj aż GUI sklepu się pokaże
+print("Czekam na GUI sklepu...")
+time.sleep(2)
+
+# Klik w GUI sklepu
+print("Klikam GUI sklepu...")
+klik(GUI_X, GUI_Y, 0.5)
+
+# Scroll
+print("Scrolluję w dół...")
+for i in range(SCROLL_ILE):
+    pyautogui.scroll(-120)
+    time.sleep(0.05)
+
+# Klik bambus
+print("Klikam bambus...")
+klik(BAMBUS_X, BAMBUS_Y, 1)
+
+# Kup 27 razy
+print("Kupuję 27 razy...")
+for i in range(KUP_ILE_RAZY):
+    print(f"Kupowanie {i + 1}/{KUP_ILE_RAZY}")
+    klik(KUP_X, KUP_Y, 0.25)
+
+print("Gotowe ✅")
